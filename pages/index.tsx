@@ -1,10 +1,8 @@
 import React from 'react'
+import { useAuth } from '../hooks/useAuth'
 
 export default function Index() {
-  return (
-    <>
-      <img src="logo.png" alt="Cremona" />
-      <h1>Cremona</h1>
-    </>
-  )
+  const { user } = useAuth()
+
+  return <div className="p-4">{user ? 'Hello' : null}</div>
 }
