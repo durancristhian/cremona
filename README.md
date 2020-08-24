@@ -10,7 +10,7 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 En esta [lista de reproducción](https://www.youtube.com/playlist?list=PL83h8sf8uOkwOUa-cYh8XK-086gQf0Fy-) en Youtube.
 
-## Episodio 1, Sábado 22/078/2020
+## Episodio 1, Sábado 22/08/2020
 
 - Maquetamos el `<Layout />` y agregamos autenticación de firebase con email y password
 - [Commit con lo que hicimos en el episodio](https://github.com/durancristhian/cremona/commit/449769031786660e3631e9476da400ac5d1fb159)
