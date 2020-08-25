@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="p-4 shadow">
+      <header className="bg-white p-4 shadow">
         <div className="flex items-center justify-between">
           <Link href="/" passHref>
             <A href="#!">
@@ -67,7 +67,7 @@ function LoggedOut() {
         onClick={() => {
           signout()
         }}
-        className="text-blue-700"
+        className="text-blue-700 focus:outline-none focus:shadow-outline"
       >
         Sing out
       </button>

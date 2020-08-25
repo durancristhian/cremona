@@ -85,7 +85,7 @@ const Login = ({ mode }: Props) => {
           <div className="text-center">
             <button
               type="submit"
-              className="border bg-blue-200 border-blue-500 px-4 py-2 disabled:opacity-50"
+              className="border bg-blue-200 border-blue-500 px-4 py-2 disabled:opacity-50 focus:outline-none focus:shadow-outline"
               disabled={!formData.email || !formData.password}
             >
               {mode === 'signin' ? 'Sign In' : 'Sign Up'}

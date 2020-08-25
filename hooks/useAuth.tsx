@@ -37,6 +37,16 @@ export const useAuth = () => {
   return useContext(AuthContext)
 }
 
+export const useUser = () => {
+  const { user } = useContext(AuthContext)
+
+  if (!user) {
+    throw new Error('User is empty')
+  }
+
+  return user
+}
+
 function useProvideAuth() {
   const [user, setUser] = useState<firebase.User | null>(null)
 

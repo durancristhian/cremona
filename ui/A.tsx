@@ -7,7 +7,11 @@ type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 const A = forwardRef(
   ({ children, ...rest }: Props, ref: Ref<HTMLAnchorElement>) => {
     return (
-      <a ref={ref} {...rest} className="text-blue-700">
+      <a
+        ref={ref}
+        {...rest}
+        className="text-blue-700 focus:outline-none focus:shadow-outline"
+      >
         {children}
       </a>
     )
