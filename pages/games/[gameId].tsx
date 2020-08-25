@@ -22,7 +22,7 @@ const GameId = () => {
     return <p className="italic text-center">There was an error.</p>
   }
 
-  if (!data || data.id) {
+  if (!data || !data.id) {
     return <p className="italic text-center">There is no challenge.</p>
   }
 
