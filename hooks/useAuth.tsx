@@ -75,7 +75,7 @@ function useProvideAuth() {
   const googleSignIn = () => {
     const provider = new fuego.auth.GoogleAuthProvider()
 
-    fuego
+    return fuego
       .auth()
       .signInWithPopup(provider)
       .then((response) => {

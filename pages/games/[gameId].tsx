@@ -1,14 +1,17 @@
-import { fuego, useDocument, useCollection } from '@nandorojo/swr-firestore'
+import { useCollection, useDocument } from '@nandorojo/swr-firestore'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { Game } from '../../types/Game'
-import Heading from '../../ui/Heading'
+import { isArray } from 'util'
 import { useAuth } from '../../hooks/useAuth'
+import { Game } from '../../types/Game'
 import Button from '../../ui/Button'
+import Heading from '../../ui/Heading'
 
 const GameId = () => {
   const router = useRouter()
-  const gameId = router.query.gameId
+  const gameId = isArray(router.query.gameId)
+    ? router.query.gameId[0]
+    : router.query.gameId
   const { data: game, error, loading, update } = useDocument<Game>(
     gameId ? `challenges/${gameId}` : null,
     {
@@ -81,8 +84,10 @@ const GameId = () => {
       )}
       <div className="mt-4">
         {game.status === 'created' && <Created></Created>}
-        {game.status === 'playing' && <Playing gameId={gameId}></Playing>}
-        {game.status === 'finished' && <Finished gameId={gameId}></Finished>}
+        {game.status === 'playing' && <Playing gameId={gameId || ''}></Playing>}
+        {game.status === 'finished' && (
+          <Finished gameId={gameId || ''}></Finished>
+        )}
       </div>
     </>
   )
