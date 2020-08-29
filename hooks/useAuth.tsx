@@ -12,6 +12,7 @@ type ContextData = {
   signin: (email: string, password: string) => Promise<firebase.User | null>
   signup: (email: string, password: string) => Promise<firebase.User | null>
   signout: () => Promise<void>
+  googleSignIn: () => Promise<firebase.User | null>
 }
 
 const defaultContextData = {
@@ -19,6 +20,7 @@ const defaultContextData = {
   signin: () => Promise.resolve(null),
   signup: () => Promise.resolve(null),
   signout: () => Promise.resolve(void 0),
+  googleSignIn: () => Promise.resolve(null),
 }
 
 const AuthContext = createContext<ContextData>(defaultContextData)
@@ -70,6 +72,18 @@ function useProvideAuth() {
       })
   }
 
+  const googleSignIn = () => {
+    const provider = new fuego.auth.GoogleAuthProvider()
+
+    fuego
+      .auth()
+      .signInWithPopup(provider)
+      .then((response) => {
+        setUser(response.user)
+        return response.user
+      })
+  }
+
   const signout = () => {
     return fuego
       .auth()
@@ -90,6 +104,7 @@ function useProvideAuth() {
   return {
     user,
     signin,
+    googleSignIn,
     signup,
     signout,
   }

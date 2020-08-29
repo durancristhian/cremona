@@ -44,16 +44,18 @@ const Layout = ({ children }: Props) => {
 export default Layout
 
 function LoggedIn() {
+  const { googleSignIn } = useAuth()
+
   return (
     <>
-      <Link href="/signin" passHref>
-        <A href="#!">Sign in</A>
-      </Link>
-      <div className="ml-4">
-        <Link href="/signup" passHref>
-          <A href="#!">Sign up</A>
-        </Link>
-      </div>
+      <button
+        onClick={() => {
+          googleSignIn()
+        }}
+        className="text-blue-700 focus:outline-none focus:shadow-outline"
+      >
+        Google Login
+      </button>
     </>
   )
 }
