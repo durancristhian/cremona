@@ -6,17 +6,14 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 > _Disclaimer: La app pertenece a un caso de uso personal y es un clon de una ya existente._
 
-## ¿Dónde puedo ver los episodios pasados?
-
-En esta [lista de reproducción](https://www.youtube.com/playlist?list=PL83h8sf8uOkwOUa-cYh8XK-086gQf0Fy-) en Youtube.
-
 ## Episodio 1, Sábado 22/08/2020
 
 > URL: /
 
 - Maquetamos el `<Layout />`
 - Agregamos autenticación de firebase con email y password
-- Commits: [Episodio #1](https://github.com/durancristhian/cremona/commit/449769031786660e3631e9476da400ac5d1fb159)
+- Commits:
+    - [Episodio #1](https://github.com/durancristhian/cremona/commit/449769031786660e3631e9476da400ac5d1fb159)
 - [Deploy](https://cremona-chihl7k7x.vercel.app/)
 
 [![Episodio 1](https://img.youtube.com/vi/UVh9CScWLnQ/0.jpg)](https://www.youtube.com/watch?v=UVh9CScWLnQ)
@@ -27,7 +24,9 @@ En esta [lista de reproducción](https://www.youtube.com/playlist?list=PL83h8sf8
 
 - Se crean desafíos (mega hardcodeados) por medio de un botón en la página principal
 - Se listan los desafíos de la persona y por medio de links se navega a la página de detalle que está vacía por el momento.
-- Commits: [Episodio #2](https://github.com/durancristhian/cremona/commit/46acf428944cfc1bb1ce27b365d875d2d1e523d2) [Fix (Gracias Teban)](https://github.com/durancristhian/cremona/commit/59af753515d55b5818fa8bfb3ea87cce9534ca6c)
+- Commits:
+    - [Episodio #2](https://github.com/durancristhian/cremona/commit/46acf428944cfc1bb1ce27b365d875d2d1e523d2)
+    - [Fix (Gracias Teban)](https://github.com/durancristhian/cremona/commit/59af753515d55b5818fa8bfb3ea87cce9534ca6c)
 - [Deploy](https://cremona-ehj6bcue2.vercel.app/)
 
 [![Episodio 2](https://img.youtube.com/vi/-M_JguJlHC4/0.jpg)](https://www.youtube.com/watch?v=-M_JguJlHC4)
@@ -41,7 +40,9 @@ En esta [lista de reproducción](https://www.youtube.com/playlist?list=PL83h8sf8
 - Cambiamos el método de autenticación en el juego. De ahora en más usaremos Google
 - Permitimos que cada persona logueada pueda "jugar" presionando un botón y obteniendo un score aleatorio
 - Se muestra una tabla de posiciones con los resultados
-- Commits: [Episodio #3 - Parte 1](https://github.com/durancristhian/cremona/commit/6775dce64e404d6d0d1b9e394ada6f9e60f518eb) [Episodio #3 - Parte 2](https://github.com/durancristhian/cremona/commit/fd7eaee00f303f2a8fe81920e0ac654ea226b1f9)
+- Commits:
+    - [Episodio #3 - Parte 1](https://github.com/durancristhian/cremona/commit/6775dce64e404d6d0d1b9e394ada6f9e60f518eb)
+    - [Episodio #3 - Parte 2](https://github.com/durancristhian/cremona/commit/fd7eaee00f303f2a8fe81920e0ac654ea226b1f9)
 - [Deploy](https://cremona-f6g71y7pa.vercel.app/)
 
 [![Episodio 3](https://img.youtube.com/vi/0zlTwUxb1ho/0.jpg)](https://www.youtube.com/watch?v=0zlTwUxb1ho)
