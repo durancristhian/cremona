@@ -51,6 +51,54 @@ const CreateChallenge = () => {
               },
             ],
           },
+          {
+            id: 'question-2',
+            description: 'Pregunta 2',
+            time: 30,
+            validOption: 'option-2',
+            options: [
+              {
+                id: 'option-1',
+                content: 'Cremona',
+              },
+              {
+                id: 'option-2',
+                content: 'Cañoncito de dulce de leche',
+              },
+              {
+                id: 'option-3',
+                content: 'Pepas',
+              },
+              {
+                id: 'option-4',
+                content: 'Sanguchitos de miga',
+              },
+            ],
+          },
+          {
+            id: 'question-3',
+            description: 'Pregunta 3',
+            time: 30,
+            validOption: 'option-3',
+            options: [
+              {
+                id: 'option-1',
+                content: 'Cremona',
+              },
+              {
+                id: 'option-2',
+                content: 'Cañoncito de dulce de leche',
+              },
+              {
+                id: 'option-3',
+                content: 'Pepas',
+              },
+              {
+                id: 'option-4',
+                content: 'Sanguchitos de miga',
+              },
+            ],
+          },
         ],
       })
 

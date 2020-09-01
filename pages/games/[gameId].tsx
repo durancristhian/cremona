@@ -1,15 +1,17 @@
 import { useCollection, useDocument } from '@nandorojo/swr-firestore'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { isArray } from 'util'
 import { useAuth } from '../../hooks/useAuth'
 import { Game } from '../../types/Game'
+import { Player } from '../../types/Player'
+import A from '../../ui/A'
 import Button from '../../ui/Button'
 import Heading from '../../ui/Heading'
 
 const GameId = () => {
   const router = useRouter()
-  const gameId = isArray(router.query.gameId)
+  const gameId = Array.isArray(router.query.gameId)
     ? router.query.gameId[0]
     : router.query.gameId
   const { data: game, error, loading, update } = useDocument<Game>(
@@ -109,15 +111,15 @@ type PlayingProps = {
   gameId: string
 }
 
-type Player = {
-  name: string
-  email: string
-  score: number
-}
-
 function Playing({ gameId }: PlayingProps) {
-  const { add } = useCollection<Player>(`challenges/${gameId}/players`)
   const { user } = useAuth()
+  const { add, data: players } = useCollection<Player>(
+    user ? `challenges/${gameId}/players` : null,
+    {
+      where: ['email', '==', user?.email],
+      listen: true,
+    },
+  )
 
   if (!user) {
     return (
@@ -133,17 +135,36 @@ function Playing({ gameId }: PlayingProps) {
     add({
       name: user.displayName,
       email: user.email,
-      score: Math.round(Math.random() * 100),
+      score: 0,
+      status: 'created',
     })
   }
+
+  const currentPlayer = players?.[0]
 
   return (
     <>
       <Heading>Playing</Heading>
       <div className="mt-4 text-center">
-        <Button type="submit" onClick={play}>
-          Ready to play
-        </Button>
+        {currentPlayer ? (
+          <div className="flex">
+            <div className="flex-auto px-4 text-left">
+              <Link
+                href="/games/[gameId]/[playerId]"
+                as={`/games/${gameId}/${currentPlayer.id}`}
+                passHref
+              >
+                <A href="#!">{currentPlayer.name}</A>
+              </Link>
+            </div>
+            <div className="px-4">{currentPlayer.status}</div>
+            <div className="px-4">{currentPlayer.score}</div>
+          </div>
+        ) : (
+          <Button type="submit" onClick={play}>
+            Ready to play
+          </Button>
+        )}
       </div>
     </>
   )
