@@ -8,8 +8,6 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 ## Episodio 1, Sábado 22/08/2020
 
-> URL: /
-
 - Maquetamos el `<Layout />`
 - Agregamos autenticación de firebase con email y password
 - Commits:
@@ -19,8 +17,6 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 [![Episodio 1](https://img.youtube.com/vi/UVh9CScWLnQ/0.jpg)](https://www.youtube.com/watch?v=UVh9CScWLnQ)
 
 ## Episodio 2, Martes 25/08/2020
-
-> URL: /
 
 - Se crean desafíos (mega hardcodeados) por medio de un botón en la página principal
 - Se listan los desafíos de la persona y por medio de links se navega a la página de detalle que está vacía por el momento.
@@ -33,8 +29,6 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 ## Episodio 3, Sábado 29/08/2020
 
-> URL: /games/:gameId
-
 - Maquetamos una card muy sencilla para mostrar algo de información relevante del desafío
 - Dibujamos un componente por cada estado del desafío (creado, jugando, terminado)
 - Cambiamos el método de autenticación en el juego. De ahora en más usaremos Google
@@ -46,6 +40,18 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 - [Deploy](https://cremona-f6g71y7pa.vercel.app/)
 
 [![Episodio 3](https://img.youtube.com/vi/0zlTwUxb1ho/0.jpg)](https://www.youtube.com/watch?v=0zlTwUxb1ho)
+
+## Episodio 4, Martes 01/09/2020
+
+- Agregamos más preguntas a los desafíos que se crean en la página principal para que tenga más sentido
+- Validamos que se pueda jugar una sola vez por email
+- Se muestra el estado del juego de la persona mientras el desafío no haya terminado
+- Creamos la página para jugar donde se recorre la colección de preguntas, se permite elegir, se da feedback sobre si la elección fue correcta o no y se guarda al final un puntaje en base a la cantidad de aciertos
+- Commits:
+    - [Episodio #4](https://github.com/durancristhian/cremona/commit/6082985efb8028fd30b5024d03e3b3bd43362c00)
+- [Deploy](https://cremona-3mllbjl3g.vercel.app/)
+
+[![Episodio 4](https://img.youtube.com/vi/YVBhqiSFPfk/0.jpg)](https://www.youtube.com/watch?v=YVBhqiSFPfk)
 
 ## Desarrollo
 
