@@ -7,6 +7,11 @@ import { Game, Option } from '../../../types/Game'
 import { Player } from '../../../types/Player'
 import Button from '../../../ui/Button'
 import useCremona from '../../../hooks/useCremona'
+import useAudio from '../../../hooks/useAudio'
+import useInterval from '../../../hooks/useInterval'
+import Countdown from '../../../components/Countdown'
+import Link from 'next/link'
+import A from '../../../ui/A'
 
 const PlayerId = () => {
   const router = useRouter()
@@ -53,7 +58,16 @@ const PlayerId = () => {
   /* TODO: verify game and player status */
   if (player.status === 'finished') {
     /* return <PlayerScore /> */
-    return <p>You finished.</p>
+    return (
+      <>
+        <p>You finished with {player.score} points.</p>
+        <div className="mt-4">
+          <Link href="/games/[gameId]" as={`/games/${gameId}`} passHref>
+            <A href="#!">Go back</A>
+          </Link>
+        </div>
+      </>
+    )
   }
 
   const onFinish = (score: number) => {
@@ -101,6 +115,23 @@ function PlayerGame({ game, onFinish }: GameProps) {
     successfulChoices,
   } = useCremona(game, onFinish)
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+  const { toggle: playError } = useAudio('/sounds/error.mp3', 0.2)
+  const { toggle: playSuccess } = useAudio('/sounds/success.mp3', 0.9)
+  const { playing, toggle: toggleBackground } = useAudio(
+    '/sounds/background.mp3',
+    0.1,
+  )
+  const [showNext, setShowNext] = useState(false)
+
+  useInterval(
+    () => {
+      if (!playing) {
+        toggleBackground()
+      }
+    },
+    100,
+    !showNext,
+  )
 
   const currentQuestion = game.questions[currentIndex]
 
@@ -119,15 +150,24 @@ function PlayerGame({ game, onFinish }: GameProps) {
             <button
               className={classnames([
                 'block px-4 py-2 my-4 bg-white border w-full text-left',
-                selectedOption &&
+                showNext &&
                   currentQuestion.validOption === option.id &&
                   'bg-green-300',
-                selectedOption &&
+                showNext &&
                   currentQuestion.validOption !== option.id &&
                   'bg-red-300',
               ])}
               onClick={() => {
                 setSelectedOption(option)
+                setShowNext(true)
+
+                toggleBackground()
+
+                if (currentQuestion.validOption === option.id) {
+                  playSuccess()
+                } else {
+                  playError()
+                }
               }}
               disabled={!!selectedOption}
             >
@@ -140,15 +180,28 @@ function PlayerGame({ game, onFinish }: GameProps) {
       <p className="mt-4 text-center italic">
         Question {currentIndex + 1} of {totalQuestions}
       </p>
-      {selectedOption && (
+      {showNext && (
         <Button
           onClick={() => {
             update(selectedOption)
             setSelectedOption(null)
+            setShowNext(false)
           }}
         >
           {currentIndex === totalQuestions - 1 ? 'Finish' : 'Next'}
         </Button>
+      )}
+      {!showNext && (
+        <div className="mt-4">
+          <Countdown
+            time={currentQuestion.time}
+            onFinish={() => {
+              playError()
+              setSelectedOption(null)
+              setShowNext(true)
+            }}
+          />
+        </div>
       )}
     </div>
   )

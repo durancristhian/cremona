@@ -10,11 +10,12 @@ export default function useCremona(
     successfulChoices: 0,
   })
 
-  const update = (selectedOption: Option) => {
+  const update = (selectedOption: Option | null) => {
     setState((prev) => {
       const currentIndex = prev.currentIndex + 1
-      const isValid =
-        game.questions[prev.currentIndex].validOption === selectedOption.id
+      const isValid = selectedOption
+        ? game.questions[prev.currentIndex].validOption === selectedOption.id
+        : false
       const successfulChoices = isValid
         ? prev.successfulChoices + 1
         : prev.successfulChoices

@@ -12,6 +12,7 @@ const ListChallenges = () => {
     listen: true,
     parseDates: ['createdAt'],
     where: ['createdBy', '==', user.uid],
+    orderBy: ['createdAt', 'desc'],
   })
 
   if (loading) {
