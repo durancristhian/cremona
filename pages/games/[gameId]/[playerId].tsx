@@ -107,37 +107,23 @@ type GameProps = {
 }
 
 function PlayerGame({ game, onFinish }: GameProps) {
-  const {
-    currentIndex,
-    totalQuestions,
-    update,
-    gameEnded,
-    successfulChoices,
-  } = useCremona(game, onFinish)
+  const { currentIndex, totalQuestions, update } = useCremona(game, onFinish)
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
   const { toggle: playError } = useAudio('/sounds/error.mp3', 0.2)
   const { toggle: playSuccess } = useAudio('/sounds/success.mp3', 0.9)
-  const { playing, toggle: toggleBackground } = useAudio(
-    '/sounds/background.mp3',
-    0.1,
-  )
+  const { toggle: toggleBackground } = useAudio('/sounds/background.mp3', 0.1)
   const [showNext, setShowNext] = useState(false)
+  const [ms, setMs] = useState(0)
 
   useInterval(
     () => {
-      if (!playing) {
-        toggleBackground()
-      }
+      setMs(ms + 100)
     },
     100,
     !showNext,
   )
 
   const currentQuestion = game.questions[currentIndex]
-
-  if (gameEnded) {
-    return <Heading type="h2">You got {successfulChoices * 10} points.</Heading>
-  }
 
   return (
     <div className="">
@@ -183,7 +169,7 @@ function PlayerGame({ game, onFinish }: GameProps) {
       {showNext && (
         <Button
           onClick={() => {
-            update(selectedOption)
+            update(selectedOption, ms)
             setSelectedOption(null)
             setShowNext(false)
           }}
@@ -195,7 +181,11 @@ function PlayerGame({ game, onFinish }: GameProps) {
         <div className="mt-4">
           <Countdown
             time={currentQuestion.time}
+            onStart={() => {
+              toggleBackground()
+            }}
             onFinish={() => {
+              toggleBackground()
               playError()
               setSelectedOption(null)
               setShowNext(true)

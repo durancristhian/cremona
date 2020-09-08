@@ -4,28 +4,34 @@ import useInterval from '../hooks/useInterval'
 type Props = {
   time: number
   onFinish: () => void
+  onStart: () => void
 }
 
-const Countdown = ({ time, onFinish }: Props) => {
+const round = (n: number) => Number(n.toFixed(5))
+
+const Countdown = ({ time, onFinish, onStart }: Props) => {
   const [translateLeft, setTranslateLeft] = useState(100)
-  const [finished, setFinished] = useState(false)
-  const step = 100 / time
+  const step = round(100 / time)
+  const [times, setTimes] = useState(time)
 
   useInterval(
     () => {
-      let nextTranslateLeft = Math.round(translateLeft - step)
+      const nextTranslateLeft = round(translateLeft - step)
+      setTranslateLeft(nextTranslateLeft)
 
-      if (nextTranslateLeft < 0) {
-        nextTranslateLeft = 0
-
-        onFinish()
-        setFinished(true)
+      if (times === time) {
+        onStart()
       }
 
-      setTranslateLeft(nextTranslateLeft)
+      const nextTimes = times - 1
+      setTimes(nextTimes)
+
+      if (!nextTimes) {
+        onFinish()
+      }
     },
     1000,
-    !finished,
+    times > -1,
   )
 
   return (
