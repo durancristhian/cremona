@@ -53,6 +53,18 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 4](https://img.youtube.com/vi/YVBhqiSFPfk/0.jpg)](https://www.youtube.com/watch?v=YVBhqiSFPfk)
 
+## Episodio 5, Sábado 05/09/2020
+
+- Ordenamos la lista de desafíos en la página principal
+- Agregamos sonidos de éxito y error al responder
+- Agregamos un countdown a la pregunta que muestra el tiempo que te queda para terminar de responder. Quedó con algunos bugs pero lo mejoraremos el episodio que viene
+- Agregamos 2 hooks: useAudio y useInterval que los usamos en los features anteriores
+- Commits:
+    - [Episodio #5](https://github.com/durancristhian/cremona/commit/88c00cbc3db92a986e7b59d7b17432b135c8f6bb)
+- [Deploy](https://cremona-n43tjppfz.vercel.app/)
+
+[![Episodio 5](https://img.youtube.com/vi/bTQ_WzkoB_o/0.jpg)](https://www.youtube.com/watch?v=bTQ_WzkoB_o)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
