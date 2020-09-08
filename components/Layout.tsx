@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
         <div className="flex items-center justify-between">
           <Link href="/" passHref>
             <A href="#!">
-              <img src="logo.png" alt="Cremona" className="h-12" />
+              <img src="/logo.png" alt="Cremona" className="h-12" />
             </A>
           </Link>
           <div className="flex">{user ? <LoggedOut /> : <LoggedIn />}</div>

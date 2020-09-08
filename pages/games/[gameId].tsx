@@ -229,7 +229,7 @@ function Table({ gameId }: TableProps) {
       </thead>
       <tbody>
         {players.map((player, i) => (
-          <tr key={player.id}>
+          <tr key={player.id} className={i < 3 ? 'bg-green-200' : ''}>
             <td className="border px-4 py-2">{i + 1}</td>
             <td className="border px-4 py-2">{player.name}</td>
             <td className="border px-4 py-2">{player.score}</td>

@@ -12,6 +12,7 @@ import useInterval from '../../../hooks/useInterval'
 import Countdown from '../../../components/Countdown'
 import Link from 'next/link'
 import A from '../../../ui/A'
+import CheckCircle from '../../../icons/CheckCircle'
 
 const PlayerId = () => {
   const router = useRouter()
@@ -81,19 +82,21 @@ const PlayerId = () => {
 
   return (
     <>
-      <Heading type="h1">{game.name}</Heading>
       {player.status === 'playing' ? (
         <PlayerGame game={game} onFinish={onFinish} />
       ) : (
-        <Button
-          onClick={() => {
-            update({
-              status: 'playing',
-            })
-          }}
-        >
-          Play
-        </Button>
+        <>
+          <Heading type="h1">{game.name}</Heading>
+          <Button
+            onClick={() => {
+              update({
+                status: 'playing',
+              })
+            }}
+          >
+            Play
+          </Button>
+        </>
       )}
     </>
   )
@@ -126,22 +129,23 @@ function PlayerGame({ game, onFinish }: GameProps) {
   const currentQuestion = game.questions[currentIndex]
 
   return (
-    <div className="">
+    <div>
       <div className="mb-4">
         <Heading type="h2">{currentQuestion.description}</Heading>
       </div>
-      <ul className="flex flex-wrap">
+      <ul className="flex flex-wrap -mx-2">
         {currentQuestion.options.map((option) => (
-          <li key={option.id} className="w-1/2">
+          <li key={option.id} className="p-2 w-1/2">
             <button
               className={classnames([
-                'block px-4 py-2 my-4 bg-white border w-full text-left',
+                'flex px-4 py-2 bg-white border w-full text-left items-center',
                 showNext &&
                   currentQuestion.validOption === option.id &&
                   'bg-green-300',
                 showNext &&
                   currentQuestion.validOption !== option.id &&
                   'bg-red-300',
+                showNext && option.id !== selectedOption?.id && 'opacity-50',
               ])}
               onClick={() => {
                 setSelectedOption(option)
@@ -157,8 +161,10 @@ function PlayerGame({ game, onFinish }: GameProps) {
               }}
               disabled={!!selectedOption}
             >
-              {selectedOption?.id === option.id && '😎  '}
-              {option.content}
+              {selectedOption?.id === option.id && (
+                <CheckCircle className="h-6 mr-4" />
+              )}
+              <span>{option.content}</span>
             </button>
           </li>
         ))}
