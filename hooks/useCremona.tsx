@@ -54,6 +54,7 @@ export default function useCremona(
 
   return {
     ...state,
+    gameEnded: game.questions.length <= state.currentIndex,
     totalQuestions: game.questions.length,
     update,
   }

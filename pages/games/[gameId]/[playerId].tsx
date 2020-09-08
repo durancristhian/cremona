@@ -110,7 +110,10 @@ type GameProps = {
 }
 
 function PlayerGame({ game, onFinish }: GameProps) {
-  const { currentIndex, totalQuestions, update } = useCremona(game, onFinish)
+  const { currentIndex, gameEnded, totalQuestions, update } = useCremona(
+    game,
+    onFinish,
+  )
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
   const { toggle: playError } = useAudio('/sounds/error.mp3', 0.2)
   const { toggle: playSuccess } = useAudio('/sounds/success.mp3', 0.9)
@@ -127,6 +130,8 @@ function PlayerGame({ game, onFinish }: GameProps) {
   )
 
   const currentQuestion = game.questions[currentIndex]
+
+  if (gameEnded) return null
 
   return (
     <div>
