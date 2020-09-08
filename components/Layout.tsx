@@ -71,7 +71,7 @@ function LoggedOut() {
         }}
         className="text-blue-700 focus:outline-none focus:shadow-outline"
       >
-        Sing out
+        Sign out
       </button>
     </>
   )
