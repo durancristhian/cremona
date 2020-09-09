@@ -74,8 +74,8 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
     - [Parte 1](https://github.com/durancristhian/cremona/commit/bdd7267102294644f83fef4b600ad975da7ebfb0)
     - [Parte 2](https://github.com/durancristhian/cremona/commit/da7821222ce545883da5167ed5d67a9e31680755)
     - [Hot fix](https://github.com/durancristhian/cremona/commit/e12e104f6637cbbdf12352d6977bb7c66745ccff)
-    - [Fix typo]()
-- [Deploy]()
+    - [Fix typo](https://github.com/durancristhian/cremona/commit/4fe7f92c29d6e7e417ad5215ea285c1effa9a7d5)
+- [Deploy](https://cremona-rb5psi4gz.vercel.app/)
 
 [![Episodio 6](https://img.youtube.com/vi/yNY19ti1TXE/0.jpg)](https://www.youtube.com/watch?v=yNY19ti1TXE)
 
