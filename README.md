@@ -65,6 +65,20 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 5](https://img.youtube.com/vi/bTQ_WzkoB_o/0.jpg)](https://www.youtube.com/watch?v=bTQ_WzkoB_o)
 
+## Episodio 6, Martes 08/09/2020
+
+- Repensamos la cuenta regresiva que había quedado con algunos errores
+- A la hora de calcular el score tenemos en cuenta el tiempo que se tardó en contestar siguiendo la fórmula que usa Kahoot!
+- Mejoramos algunos detalles en forma de typos, colores y UX en general que los pasamos por alto en episodios anteriores
+- Commits:
+    - [Parte 1](https://github.com/durancristhian/cremona/commit/bdd7267102294644f83fef4b600ad975da7ebfb0)
+    - [Parte 2](https://github.com/durancristhian/cremona/commit/da7821222ce545883da5167ed5d67a9e31680755)
+    - [Hot fix](https://github.com/durancristhian/cremona/commit/e12e104f6637cbbdf12352d6977bb7c66745ccff)
+    - [Fix typo]()
+- [Deploy]()
+
+[![Episodio 6](https://img.youtube.com/vi/yNY19ti1TXE/0.jpg)](https://www.youtube.com/watch?v=yNY19ti1TXE)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
