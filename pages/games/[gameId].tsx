@@ -67,25 +67,25 @@ const GameId = () => {
             <p>{game.createdAt.toLocaleString()}</p>
           </div>
           <p>{game.questions.length} questions</p>
+          {isAdmin && game.status !== 'finished' && (
+            <div className="mt-4">
+              <button
+                type="submit"
+                className="border bg-blue-200 border-blue-500 px-4 py-2 disabled:opacity-50 focus:outline-none focus:shadow-outline"
+                onClick={nextState}
+              >
+                {game.status === 'created'
+                  ? 'Activate this challenge'
+                  : game.status === 'playing'
+                  ? 'Finish this challenge'
+                  : ''}
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      {isAdmin && game.status !== 'finished' && (
-        <div className="mt-4 text-center">
-          <button
-            type="submit"
-            className="border bg-blue-200 border-blue-500 px-4 py-2 disabled:opacity-50 focus:outline-none focus:shadow-outline"
-            onClick={nextState}
-          >
-            {game.status === 'created'
-              ? 'Play'
-              : game.status === 'playing'
-              ? 'Finish'
-              : ''}
-          </button>
-        </div>
-      )}
       <div className="mt-4">
-        {game.status === 'created' && <Created></Created>}
+        {game.status === 'created' && !isAdmin && <Created></Created>}
         {game.status === 'playing' && <Playing gameId={gameId || ''}></Playing>}
         {game.status === 'finished' && (
           <Finished gameId={gameId || ''}></Finished>
@@ -123,6 +123,7 @@ function Playing({ gameId }: PlayingProps) {
 
   if (!user) {
     return (
+      /* TODO: add login action */
       <p className="italic text-center">You have to log in before playing.</p>
     )
   }
@@ -142,9 +143,14 @@ function Playing({ gameId }: PlayingProps) {
 
   const currentPlayer = players?.[0]
 
+  /* 
+    TODO:
+      - redirect the user after creating the object
+      - show the score after playing
+  */
+
   return (
     <>
-      <Heading>Playing</Heading>
       <div className="mt-4 text-center">
         {currentPlayer ? (
           <div className="flex">
@@ -162,7 +168,7 @@ function Playing({ gameId }: PlayingProps) {
           </div>
         ) : (
           <Button type="submit" onClick={play}>
-            Ready to play
+            Go to the game
           </Button>
         )}
       </div>

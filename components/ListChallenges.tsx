@@ -30,7 +30,7 @@ const ListChallenges = () => {
   return (
     <>
       <div className="mb-4">
-        <Heading type="h2" align="left">
+        <Heading type="h2" align="center">
           Your challenges
         </Heading>
       </div>
@@ -44,7 +44,10 @@ const ListChallenges = () => {
         </thead>
         <tbody>
           {data.map((game) => (
-            <tr key={game.id}>
+            <tr
+              key={game.id}
+              className={game.status === 'finished' ? '' : 'bg-green-100'}
+            >
               <td className="border px-4 py-2">
                 <Link href="/games/[gameId]" as={`/games/${game.id}`} passHref>
                   <A href="#!">{game.name}</A>

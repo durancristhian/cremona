@@ -115,7 +115,7 @@ const CreateChallenge = () => {
   return (
     <>
       <div className="mb-4">
-        <Heading type="h2" align="left">
+        <Heading type="h2" align="center">
           Create a challenge
         </Heading>
       </div>

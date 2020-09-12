@@ -13,29 +13,35 @@ const Layout = ({ children }: Props) => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-white p-4 shadow">
-        <div className="flex items-center justify-between">
-          <Link href="/" passHref>
-            <A href="#!">
-              <img src="/logo.png" alt="Cremona" className="h-12" />
-            </A>
-          </Link>
-          <div className="flex">{user ? <LoggedOut /> : <LoggedIn />}</div>
+        <div className="container mx-auto w-full">
+          <div className="flex items-center justify-between">
+            <Link href="/" passHref>
+              <A href="#!">
+                <img src="/logo.png" alt="Cremona" className="h-12" />
+              </A>
+            </Link>
+            <div className="flex">{user ? <LoggedOut /> : <LoggedIn />}</div>
+          </div>
         </div>
       </header>
-      <main className="flex-1 p-4">{children}</main>
+      <main className="flex-1 p-4">
+        <div className="container mx-auto w-full">{children}</div>
+      </main>
       <footer className="p-4">
-        <p className="text-center">
-          <span>Created by </span>
-          <Link href="/signin" passHref>
-            <A
-              href="http://twitter.com/durancristhian"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @durancristhian
-            </A>
-          </Link>
-        </p>
+        <div className="container mx-auto w-full">
+          <p className="text-center">
+            <span>Created by </span>
+            <Link href="/signin" passHref>
+              <A
+                href="http://twitter.com/durancristhian"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @durancristhian
+              </A>
+            </Link>
+          </p>
+        </div>
       </footer>
     </div>
   )

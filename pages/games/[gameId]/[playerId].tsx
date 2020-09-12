@@ -13,6 +13,7 @@ import Countdown from '../../../components/Countdown'
 import Link from 'next/link'
 import A from '../../../ui/A'
 import CheckCircle from '../../../icons/CheckCircle'
+import XCircle from '../../../icons/XCircle'
 
 const PlayerId = () => {
   const router = useRouter()
@@ -60,14 +61,20 @@ const PlayerId = () => {
   if (player.status === 'finished') {
     /* return <PlayerScore /> */
     return (
-      <>
-        <p>You finished with {player.score} points.</p>
-        <div className="mt-4">
+      <div>
+        <p className="flex flex-col items-center justify-center">
+          <span>You finished</span>
+          <span className="text-6xl font-bold mx-4">
+            {player.score.toLocaleString()}
+          </span>
+          <span>with points</span>
+        </p>
+        <div className="mt-8 text-center">
           <Link href="/games/[gameId]" as={`/games/${gameId}`} passHref>
-            <A href="#!">Go back</A>
+            <A href="#!">Go back to challenge</A>
           </Link>
         </div>
-      </>
+      </div>
     )
   }
 
@@ -85,7 +92,7 @@ const PlayerId = () => {
       {player.status === 'playing' ? (
         <PlayerGame game={game} onFinish={onFinish} />
       ) : (
-        <>
+        <div className="text-center">
           <Heading type="h1">{game.name}</Heading>
           <Button
             onClick={() => {
@@ -94,9 +101,9 @@ const PlayerId = () => {
               })
             }}
           >
-            Play
+            Ready to play
           </Button>
-        </>
+        </div>
       )}
     </>
   )
@@ -134,16 +141,19 @@ function PlayerGame({ game, onFinish }: GameProps) {
   if (gameEnded) return null
 
   return (
-    <div>
+    <div className="mx-auto max-w-2xl w-full">
+      <p className="mt-4 text-center italic">
+        {currentIndex + 1} of {totalQuestions}
+      </p>
       <div className="mb-4">
         <Heading type="h2">{currentQuestion.description}</Heading>
       </div>
-      <ul className="flex flex-wrap -mx-2">
+      <ul>
         {currentQuestion.options.map((option) => (
-          <li key={option.id} className="p-2 w-1/2">
+          <li key={option.id} className="py-2">
             <button
               className={classnames([
-                'flex px-4 py-2 bg-white border w-full text-left items-center',
+                'flex px-4 py-2 bg-white border w-full text-left h-16 items-center',
                 showNext &&
                   currentQuestion.validOption === option.id &&
                   'bg-green-300',
@@ -166,27 +176,29 @@ function PlayerGame({ game, onFinish }: GameProps) {
               }}
               disabled={!!selectedOption}
             >
-              {selectedOption?.id === option.id && (
+              {showNext && currentQuestion.validOption === option.id && (
                 <CheckCircle className="h-6 mr-4" />
+              )}
+              {showNext && currentQuestion.validOption !== option.id && (
+                <XCircle className="h-6 mr-4" />
               )}
               <span>{option.content}</span>
             </button>
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-center italic">
-        Question {currentIndex + 1} of {totalQuestions}
-      </p>
       {showNext && (
-        <Button
-          onClick={() => {
-            update(selectedOption, ms)
-            setSelectedOption(null)
-            setShowNext(false)
-          }}
-        >
-          {currentIndex === totalQuestions - 1 ? 'Finish' : 'Next'}
-        </Button>
+        <div className="mt-4 text-right">
+          <Button
+            onClick={() => {
+              update(selectedOption, ms)
+              setSelectedOption(null)
+              setShowNext(false)
+            }}
+          >
+            {currentIndex === totalQuestions - 1 ? 'Finish' : 'Next'}
+          </Button>
+        </div>
       )}
       {!showNext && (
         <div className="mt-4">
