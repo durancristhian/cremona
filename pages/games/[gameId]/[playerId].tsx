@@ -61,7 +61,8 @@ const PlayerId = () => {
   if (player.status === 'finished') {
     /* return <PlayerScore /> */
     return (
-      <div>
+      /* TODO: make a component */
+      <>
         <p className="flex flex-col items-center justify-center">
           <span>You finished</span>
           <span className="text-6xl font-bold mx-4">
@@ -74,7 +75,7 @@ const PlayerId = () => {
             <A href="#!">Go back to challenge</A>
           </Link>
         </div>
-      </div>
+      </>
     )
   }
 

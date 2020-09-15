@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import A from '../ui/A'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth, useUser } from '../hooks/useAuth'
+import ChevronRight from '../icons/ChevronRight'
 
 type Props = {
   children: ReactNode
@@ -67,18 +68,50 @@ function LoggedIn() {
 }
 
 function LoggedOut() {
+  const [isOpen, setIsOpen] = useState(false)
   const { signout } = useAuth()
+  const user = useUser()
 
   return (
-    <>
-      <button
-        onClick={() => {
-          signout()
-        }}
-        className="text-blue-700 focus:outline-none focus:shadow-outline"
-      >
-        Sign out
-      </button>
-    </>
+    <div className="relative inline-block">
+      <div>
+        <span className="shadow-sm">
+          <button
+            type="button"
+            className="flex items-center w-full border px-4 py-2 focus:outline-none focus:shadow-outline-blue transition ease-in-out duration-150"
+            id="options-menu"
+            aria-haspopup="true"
+            aria-expanded="true"
+            onClick={() => {
+              setIsOpen(!isOpen)
+            }}
+          >
+            {user.displayName}
+            <ChevronRight className="h-6 ml-4" />
+          </button>
+        </span>
+      </div>
+      {isOpen && (
+        <div className="origin-top-right absolute right-0 mt-1 w-56">
+          <div className="bg-white border">
+            <div
+              className="px-4 py-2"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              <button
+                onClick={() => {
+                  signout()
+                }}
+                className="focus:outline-none focus:shadow-outline w-full text-left"
+              >
+                Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

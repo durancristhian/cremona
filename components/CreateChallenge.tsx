@@ -1,10 +1,12 @@
 import { useCollection } from '@nandorojo/swr-firestore'
+import { useRouter } from 'next/router'
 import React, { FormEvent, useState } from 'react'
 import { useUser } from '../hooks/useAuth'
-import Heading from '../ui/Heading'
 import { Game } from '../types/Game'
+import Heading from '../ui/Heading'
 
 const CreateChallenge = () => {
+  const router = useRouter()
   const [inProgress, setInProgress] = useState(false)
   const [message, setMessage] = useState('')
   const user = useUser()
@@ -103,7 +105,9 @@ const CreateChallenge = () => {
       })
 
       setInProgress(false)
-      setMessage('')
+      setMessage('Challenge created. Redirecting home...')
+
+      router.push('/')
     } catch (error) {
       console.error(error)
 

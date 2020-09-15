@@ -1,11 +1,9 @@
-import { useCollection, useDocument } from '@nandorojo/swr-firestore'
-import Link from 'next/link'
+import { fuego, useCollection, useDocument } from '@nandorojo/swr-firestore'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { Game } from '../../types/Game'
 import { Player } from '../../types/Player'
-import A from '../../ui/A'
 import Button from '../../ui/Button'
 import Heading from '../../ui/Heading'
 
@@ -86,9 +84,14 @@ const GameId = () => {
       </div>
       <div className="mt-4">
         {game.status === 'created' && !isAdmin && <Created></Created>}
-        {game.status === 'playing' && <Playing gameId={gameId || ''}></Playing>}
+        {game.status === 'playing' && (
+          <>
+            <PlayingStatus gameId={gameId || ''} />
+            <Playing gameId={gameId || ''}></Playing>
+          </>
+        )}
         {game.status === 'finished' && (
-          <Finished gameId={gameId || ''}></Finished>
+          <Finished gameId={gameId || ''} isAdmin={isAdmin}></Finished>
         )}
       </div>
     </>
@@ -107,13 +110,39 @@ function Created() {
   )
 }
 
+type PlayingStatusProps = {
+  gameId: string
+}
+
+function PlayingStatus({ gameId }: PlayingStatusProps) {
+  const { data: players } = useCollection<Player>(
+    gameId ? `challenges/${gameId}/players` : null,
+    {
+      listen: true,
+    },
+  )
+
+  const playersAmount = players?.length
+  const currentlyPlaying = players?.filter((p) => p.status === 'playing').length
+  const finished = players?.filter((p) => p.status === 'finished').length
+
+  return (
+    <ul>
+      <li>People: {playersAmount}</li>
+      <li>Currently playing: {currentlyPlaying}</li>
+      <li>Finished: {finished}</li>
+    </ul>
+  )
+}
+
 type PlayingProps = {
   gameId: string
 }
 
 function Playing({ gameId }: PlayingProps) {
+  const router = useRouter()
   const { user } = useAuth()
-  const { add, data: players } = useCollection<Player>(
+  const { data: players } = useCollection<Player>(
     user ? `challenges/${gameId}/players` : null,
     {
       where: ['email', '==', user?.email],
@@ -128,48 +157,57 @@ function Playing({ gameId }: PlayingProps) {
     )
   }
 
-  const play = () => {
+  const play = async () => {
     if (!user.displayName || !user.email) {
       return alert('You need a display name and email')
     }
 
-    add({
+    const newPlayer = fuego.db
+      .collection('challenges')
+      .doc(gameId)
+      .collection('players')
+      .doc()
+
+    await newPlayer.set({
       name: user.displayName,
       email: user.email,
       score: 0,
       status: 'created',
     })
+
+    router.push(`/games/${gameId}/${newPlayer.id}`)
   }
 
   const currentPlayer = players?.[0]
-
-  /* 
-    TODO:
-      - redirect the user after creating the object
-      - show the score after playing
-  */
 
   return (
     <>
       <div className="mt-4 text-center">
         {currentPlayer ? (
           <div className="flex">
-            <div className="flex-auto px-4 text-left">
-              <Link
-                href="/games/[gameId]/[playerId]"
-                as={`/games/${gameId}/${currentPlayer.id}`}
-                passHref
-              >
-                <A href="#!">{currentPlayer.name}</A>
-              </Link>
+            <div className="flex-auto">
+              {currentPlayer.status !== 'finished' ? (
+                <Button
+                  onClick={() => {
+                    router.push(`/games/${gameId}/${currentPlayer.id}`)
+                  }}
+                >
+                  Go to the game
+                </Button>
+              ) : (
+                /* TODO: make a component */
+                <p className="flex flex-col items-center justify-center">
+                  <span>You finished</span>
+                  <span className="text-6xl font-bold mx-4">
+                    {currentPlayer.score.toLocaleString()}
+                  </span>
+                  <span>with points</span>
+                </p>
+              )}
             </div>
-            <div className="px-4">{currentPlayer.status}</div>
-            <div className="px-4">{currentPlayer.score}</div>
           </div>
         ) : (
-          <Button type="submit" onClick={play}>
-            Go to the game
-          </Button>
+          <Button onClick={play}>Go to the game</Button>
         )}
       </div>
     </>
@@ -177,10 +215,11 @@ function Playing({ gameId }: PlayingProps) {
 }
 
 type FinishedProps = {
+  isAdmin: boolean
   gameId: string
 }
 
-function Finished({ gameId }: FinishedProps) {
+function Finished({ gameId, isAdmin }: FinishedProps) {
   const [isVisible, setVisibility] = useState(false)
 
   const seePodium = () => {
@@ -195,16 +234,17 @@ function Finished({ gameId }: FinishedProps) {
           <Button onClick={seePodium}>See podium</Button>
         </div>
       )}
-      {isVisible && <Table gameId={gameId} />}
+      {isVisible && <Table gameId={gameId} isAdmin={isAdmin} />}
     </>
   )
 }
 
 type TableProps = {
+  isAdmin: boolean
   gameId: string
 }
 
-function Table({ gameId }: TableProps) {
+function Table({ gameId, isAdmin }: TableProps) {
   const { data: players, error, loading } = useCollection<Player>(
     `challenges/${gameId}/players`,
     {
@@ -224,24 +264,44 @@ function Table({ gameId }: TableProps) {
     return <p className="italic text-center">There is no players.</p>
   }
 
+  const exportCSV = (players: Player[]) => {
+    const csv = players.map((p) => `${p.name},${p.email},${p.score}`).join('\n')
+    const dl = 'data:text/csv;charset=utf-8,' + csv
+
+    window.open(encodeURI(dl))
+  }
+
   return (
-    <table className="table-fixed w-full">
-      <thead>
-        <tr className="bg-white text-left">
-          <th className="border w-1/3 px-4 py-2">Position</th>
-          <th className="border w-1/3 px-4 py-2">Name</th>
-          <th className="border w-1/3 px-4 py-2">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {players.map((player, i) => (
-          <tr key={player.id} className={i < 3 ? 'bg-green-200' : ''}>
-            <td className="border px-4 py-2">{i + 1}</td>
-            <td className="border px-4 py-2">{player.name}</td>
-            <td className="border px-4 py-2">{player.score}</td>
+    <>
+      {isAdmin && (
+        <div className="mb-4">
+          <Button
+            onClick={() => {
+              exportCSV(players)
+            }}
+          >
+            Export .csv
+          </Button>
+        </div>
+      )}
+      <table className="table-fixed w-full">
+        <thead>
+          <tr className="bg-white text-left">
+            <th className="border w-1/3 px-4 py-2">Position</th>
+            <th className="border w-1/3 px-4 py-2">Name</th>
+            <th className="border w-1/3 px-4 py-2">Score</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {players.map((player, i) => (
+            <tr key={player.id} className={i < 3 ? 'bg-green-200' : ''}>
+              <td className="border px-4 py-2">{i + 1}</td>
+              <td className="border px-4 py-2">{player.name}</td>
+              <td className="border px-4 py-2">{player.score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   )
 }
