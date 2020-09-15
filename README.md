@@ -79,6 +79,21 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 6](https://img.youtube.com/vi/yNY19ti1TXE/0.jpg)](https://www.youtube.com/watch?v=yNY19ti1TXE)
 
+## Episodio 7, Sábado 12/09/2020
+
+- Agregamos un contenedor en el <Layout /> de manera de evitar que el contenido se vaya hasta el borde
+- Pusimos un color distinto en el fondo para aquellos challenges que no están terminados. Fue una manera de lidiar con la situación de que no tenemos filtros en esa lista
+- Movimos las acciones de admin de los juegos hacia dentro de los cards. De esta manera es todo más intuitivo
+- Mejoramos el copy de algunos botones y secciones
+- Discutimos sobre flujos que no están del todo claros como el de la creación del objeto para la persona que va a jugar
+- Mejoramos la estructura de los multiple choice. Pasamos a que las opciones se apilen, tengan un ícono que represente mejor el estado y movimos de lugar algunas partes de la UI para dar más claridad al estado actual del juego
+- Mejoramos la pantalla final del juego que muestra el puntaje
+- Commits:
+    - [Episodio #7](https://github.com/durancristhian/cremona/commit/bf2572c0ddda2d48c91e44bc8f6c2c03752c985f)
+- [Deploy](https://cremona-gd1q2tqme.vercel.app/)
+
+[![Episodio 7](https://img.youtube.com/vi/S9Ta7HTGg1k/0.jpg)](https://www.youtube.com/watch?v=S9Ta7HTGg1k)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
