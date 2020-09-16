@@ -94,6 +94,19 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 7](https://img.youtube.com/vi/S9Ta7HTGg1k/0.jpg)](https://www.youtube.com/watch?v=S9Ta7HTGg1k)
 
+## Episodio 8, Martes 15/09/2020
+
+- Mejoramos el <Layout /> agregando un select con el nombre del user y la posibilidad de hacer _sign out_ desde las opciones
+- Agregamos filtro por estado (created, playing, finished) a la lista de desafíos
+- Movimos la funcionalidad de crear un desafío a una nueva página
+- Agregamos conteo en tiempo real de cuantas personas se anotaron a jugar, cuantas están jugando y cuantas ya terminaron
+- Agregamos la posibilidad de exportar la tabla de posiciones en formato CSV para el user admin
+- Commits:
+    - [Episodio #8](https://github.com/durancristhian/cremona/commit/5aa5395e9e0b6f1fa644e4337bd03be09d8a8839)
+- [Deploy](https://cremona-hnadc4cjl.vercel.app/)
+
+[![Episodio 8](https://img.youtube.com/vi/3ffPagGVbqQ/0.jpg)](https://www.youtube.com/watch?v=3ffPagGVbqQ)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
