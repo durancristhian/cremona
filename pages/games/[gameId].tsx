@@ -266,9 +266,17 @@ function Table({ gameId, isAdmin }: TableProps) {
 
   const exportCSV = (players: Player[]) => {
     const csv = players.map((p) => `${p.name},${p.email},${p.score}`).join('\n')
-    const dl = 'data:text/csv;charset=utf-8,' + csv
+    const csvContent = encodeURI(csv)
 
-    window.open(encodeURI(dl))
+    const elem = window.document.createElement('a')
+    elem.href = 'data:text/csv;charset=utf-8,' + csvContent
+    elem.download = 'podium.csv'
+
+    document.body.appendChild(elem)
+
+    elem.click()
+
+    document.body.removeChild(elem)
   }
 
   return (
