@@ -107,6 +107,15 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 8](https://img.youtube.com/vi/3ffPagGVbqQ/0.jpg)](https://www.youtube.com/watch?v=3ffPagGVbqQ)
 
+## Episodio 9, Sábado 18/09/2020
+
+- Le dimos vida a la página `/create` donde empezamos a darle funcionalidad a un formulario para generar los desafíos. No lo pudimos completar, quedaron 2 pequeños features para corregir pero quedó bastante bien. Este es el stream más largo que hicimos (3 hs.) porque usamos Formik para no escribir todo tan de 0 y nos llevó algo de tiempo entender como usarlo y demás. Pero valió la pena al final :D
+- Commits:
+    - [Episodio #9](https://github.com/durancristhian/cremona/commit/2fdb9b653743d8b3433fce54a3c70cd823f9c918)
+- [Deploy](https://cremona-6gru1w4bw.vercel.app/)
+
+[![Episodio 9](https://img.youtube.com/vi/dCikEhJe1m0/0.jpg)](https://www.youtube.com/watch?v=dCikEhJe1m0)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
