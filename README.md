@@ -116,6 +116,16 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 9](https://img.youtube.com/vi/dCikEhJe1m0/0.jpg)](https://www.youtube.com/watch?v=dCikEhJe1m0)
 
+## Episodio 10, Martes 22/09/2020
+
+- Agregarmos la funcionalidad de elegir la respuesta correcta al momento de crear un desafío y también mejoramos la validación del formulario por completo
+- Solucionamos el error con la descarga de los resultados del juego a un .csv
+- Commits:
+    - [Episodio #10](https://github.com/durancristhian/cremona/commit/f105602f1ff498cd1489358ba1ee1a05bdbaed63)
+- [Deploy](https://cremona-7fimnyhdj.vercel.app/)
+
+[![Episodio 10](https://img.youtube.com/vi/7RrRt2kvZJU/0.jpg)](https://www.youtube.com/watch?v=7RrRt2kvZJU)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
