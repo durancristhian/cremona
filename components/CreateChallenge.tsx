@@ -1,17 +1,22 @@
 import { useCollection } from '@nandorojo/swr-firestore'
-import { Field, FieldArray, Form, Formik, getIn, FormikValues } from 'formik'
+import firebase from 'firebase'
+import { Field, FieldArray, Form, Formik, FormikValues, getIn } from 'formik'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { FormEvent, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 import { useUser } from '../hooks/useAuth'
 import CheckCircle from '../icons/CheckCircle'
+import Minus from '../icons/Minus'
+import Photograph from '../icons/Photograph'
 import XCircle from '../icons/XCircle'
 import { Game, Question } from '../types/Game'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 
 type InitialValue = {
+  cover: string
+  coverName: string
   name: string
   description: string
   questions: Question[]
@@ -31,6 +36,8 @@ const ErrorMessage = ({ name }: { name: string }) => (
 )
 
 const initialValues: InitialValue = {
+  cover: '',
+  coverName: '',
   name: '',
   description: '',
   questions: [],
@@ -41,15 +48,24 @@ const CreateChallenge = () => {
   const [message, setMessage] = useState('')
   const user = useUser()
   const { add } = useCollection<Game>('challenges')
+  const coverRef = useRef<HTMLInputElement>(null)
 
   const onSubmit = async (values: InitialValue) => {
     setMessage('Processing...')
 
     return new Promise(async (resolve, reject) => {
       try {
+        const storageRef = firebase.storage().ref()
+        const coverName = `${uuidv4()}${values.coverName}`
+        const coverRef = storageRef.child(coverName)
+
+        await coverRef.putString(values.cover, 'data_url')
+
+        const cover = await coverRef.getDownloadURL()
+
         await add({
           name: values.name,
-          cover: 'https://source.unsplash.com/random/200x200',
+          cover,
           createdAt: new Date(),
           description: values.description,
           id: '',
@@ -87,6 +103,8 @@ const CreateChallenge = () => {
           description: Yup.string()
             .required('Required')
             .max(280, 'Must be 280 characters or less'),
+          cover: Yup.string(),
+          coverExtension: Yup.mixed().oneOf(['jpg', 'jpeg', 'png']),
           questions: Yup.array()
             .min(1)
             .of(
@@ -136,6 +154,82 @@ const CreateChallenge = () => {
                 placeholder="Description"
               />
               <ErrorMessage name="description" />
+            </div>
+            <div className="mb-4">
+              <input
+                ref={coverRef}
+                type="file"
+                name="cover"
+                className="visually-hidden"
+                id="cover"
+                multiple={false}
+                accept="image/x-png,image/jpeg,image/jpg"
+                tabIndex={-1}
+                onChange={(event: FormEvent<HTMLInputElement>) => {
+                  const file =
+                    event.currentTarget.files &&
+                    event.currentTarget.files.length
+                      ? event.currentTarget.files[0]
+                      : null
+
+                  if (file) {
+                    const reader = new FileReader()
+
+                    reader.readAsDataURL(file)
+
+                    reader.onload = function () {
+                      setFieldValue('coverName', file.name)
+                      setFieldValue('cover', reader.result)
+                    }
+                  } else {
+                    setFieldValue('coverName', '')
+                    setFieldValue('cover', '')
+
+                    if (coverRef.current) {
+                      coverRef.current.value = ''
+                    }
+                  }
+                }}
+              />
+              {!values.cover ? (
+                <button
+                  type="button"
+                  className="h-64 w-full border-black border-2 border-dashed focus:outline-none focus:shadow-outline"
+                  onClick={() => {
+                    if (coverRef.current) {
+                      coverRef.current.click()
+                    }
+                  }}
+                >
+                  <div className="flex flex-col justify-center items-center px-4 py-2">
+                    <Photograph className="h-6 mb-2" />
+                    <span>Add cover</span>
+                  </div>
+                </button>
+              ) : (
+                <div className="flex justify-center mx-auto">
+                  <div className="relative">
+                    <img
+                      src={values.cover}
+                      alt={values.coverName}
+                      className="mx-auto shadow h-64"
+                    />
+                    <button
+                      className="absolute bg-white border-2 rounded-full top-0 right-0 p-2 -mt-2 -mr-2 focus:outline-none focus:shadow-outline"
+                      onClick={() => {
+                        setFieldValue('coverName', '')
+                        setFieldValue('cover', '')
+
+                        if (coverRef.current) {
+                          coverRef.current.value = ''
+                        }
+                      }}
+                    >
+                      <Minus className="h-2" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <FieldArray

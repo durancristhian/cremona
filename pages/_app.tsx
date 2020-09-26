@@ -1,6 +1,7 @@
 import { Fuego, FuegoProvider } from '@nandorojo/swr-firestore'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 import { AppProps } from 'next/app'
 import React from 'react'
 import Layout from '../components/Layout'

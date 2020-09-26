@@ -51,7 +51,7 @@ const GameId = () => {
   return (
     <>
       <div className="bg-white flex p-4 shadow">
-        <div className="w-32">
+        <div className="w-64">
           <img src={game.cover} alt={game.name} className="shadow" />
         </div>
         <div className="flex-auto pl-4">
