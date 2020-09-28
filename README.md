@@ -126,6 +126,15 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 10](https://img.youtube.com/vi/7RrRt2kvZJU/0.jpg)](https://www.youtube.com/watch?v=7RrRt2kvZJU)
 
+## Episodio 11, Sábado 26/09/2020
+
+- Agregamos la posibilidad de subir una foto (.jpg, .jpeg o .png) cuando se crea un desafío
+- Commits:
+    - [Episodio #11](https://github.com/durancristhian/cremona/commit/465991d248c40f4362758ccff33e8da1fd5868e4)
+- [Deploy](https://cremona-fa7vjc7h3.vercel.app/)
+
+[![Episodio 11](https://img.youtube.com/vi/TCen9qw3vVo/0.jpg)](https://www.youtube.com/watch?v=TCen9qw3vVo)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
