@@ -265,7 +265,9 @@ function Table({ gameId, isAdmin }: TableProps) {
   }
 
   const exportCSV = (players: Player[]) => {
-    const csv = players.map((p) => `${p.name},${p.email},${p.score}`).join('\n')
+    const csv = players
+      .map((p, i) => `${i + 1},${p.name},${p.email},${p.score}`)
+      .join('\n')
     const csvContent = encodeURI(csv)
 
     const elem = window.document.createElement('a')

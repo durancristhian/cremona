@@ -103,8 +103,6 @@ const CreateChallenge = () => {
           description: Yup.string()
             .required('Required')
             .max(280, 'Must be 280 characters or less'),
-          cover: Yup.string(),
-          coverExtension: Yup.mixed().oneOf(['jpg', 'jpeg', 'png']),
           questions: Yup.array()
             .min(1)
             .of(
@@ -135,6 +133,8 @@ const CreateChallenge = () => {
           isSubmitting,
           values,
           setFieldValue,
+          /* setFieldError,
+          setFieldTouched, */
         }) => (
           <Form>
             <div className="mb-4">
@@ -172,7 +172,30 @@ const CreateChallenge = () => {
                       ? event.currentTarget.files[0]
                       : null
 
+                  /* function bytesToSize(bytes: number) {
+                    const bytesLog = Math.log(bytes)
+                    const divisor = Math.log(1024)
+                    const floor = Math.floor(bytesLog / divisor)
+                    const value = parseInt(`${floor}`)
+
+                    return bytes / Math.pow(1024, value)
+                  } */
+
                   if (file) {
+                    /* const size = bytesToSize(file.size)
+
+                    if (size > 1) {
+                      setFieldValue('coverName', '')
+                      setFieldValue('cover', '')
+                      setFieldError(
+                        'cover',
+                        'File size should be less than 5 mb.',
+                      )
+                      setFieldTouched('cover', true, false)
+
+                      return
+                    } */
+
                     const reader = new FileReader()
 
                     reader.readAsDataURL(file)
@@ -230,6 +253,7 @@ const CreateChallenge = () => {
                   </div>
                 </div>
               )}
+              <ErrorMessage name="cover" />
             </div>
             <div className="mb-4">
               <FieldArray
