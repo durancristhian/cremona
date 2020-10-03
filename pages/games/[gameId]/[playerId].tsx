@@ -1,21 +1,30 @@
-import classnames from 'classnames'
-import React, { useState } from 'react'
-import Heading from '../../../ui/Heading'
-import { useRouter } from 'next/router'
 import { useDocument } from '@nandorojo/swr-firestore'
-import { Game, Option } from '../../../types/Game'
-import { Player } from '../../../types/Player'
-import Button from '../../../ui/Button'
-import useCremona from '../../../hooks/useCremona'
-import useAudio from '../../../hooks/useAudio'
-import useInterval from '../../../hooks/useInterval'
-import Countdown from '../../../components/Countdown'
+import classnames from 'classnames'
 import Link from 'next/link'
-import A from '../../../ui/A'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { LoggedOut } from '../..'
+import Countdown from '../../../components/Countdown'
+import useAudio from '../../../hooks/useAudio'
+import { useAuth, useUser } from '../../../hooks/useAuth'
+import useCremona from '../../../hooks/useCremona'
+import useInterval from '../../../hooks/useInterval'
 import CheckCircle from '../../../icons/CheckCircle'
 import XCircle from '../../../icons/XCircle'
+import { Game, Option } from '../../../types/Game'
+import { Player } from '../../../types/Player'
+import A from '../../../ui/A'
+import Button from '../../../ui/Button'
+import Heading from '../../../ui/Heading'
 
-const PlayerId = () => {
+export default function PlayerId() {
+  const { user } = useAuth()
+
+  return user ? <Content /> : <LoggedOut />
+}
+
+const Content = () => {
+  const user = useUser()
   const router = useRouter()
   const gameId = Array.isArray(router.query.gameId)
     ? router.query.gameId[0]
@@ -51,14 +60,22 @@ const PlayerId = () => {
     return <p className="italic text-center">There was an error.</p>
   }
 
-  if (!game || !game.id || !player) {
+  if (!game || !player) {
     return (
       <p className="italic text-center">There is no challenge or player.</p>
     )
   }
 
-  /* TODO: verify game and player status */
+  if (user.uid !== player.userId) {
+    return (
+      <p className="italic text-center">
+        The user does not match with the player.
+      </p>
+    )
+  }
+
   if (player.status === 'finished') {
+    /* TODO: verify game and player status */
     /* return <PlayerScore /> */
     return (
       /* TODO: make a component */
@@ -110,14 +127,12 @@ const PlayerId = () => {
   )
 }
 
-export default PlayerId
-
-type GameProps = {
+type PlayerGameProps = {
   game: Game
   onFinish: (score: number) => void
 }
 
-function PlayerGame({ game, onFinish }: GameProps) {
+function PlayerGame({ game, onFinish }: PlayerGameProps) {
   const { currentIndex, gameEnded, totalQuestions, update } = useCremona(
     game,
     onFinish,

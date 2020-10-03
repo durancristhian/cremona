@@ -13,7 +13,7 @@ function LoggedIn() {
   return <ListChallenges />
 }
 
-function LoggedOut() {
+export function LoggedOut() {
   const { googleSignIn } = useAuth()
 
   return (

@@ -1,6 +1,7 @@
 import { fuego, useCollection, useDocument } from '@nandorojo/swr-firestore'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { LoggedOut } from '..'
 import { useAuth } from '../../hooks/useAuth'
 import { Game } from '../../types/Game'
 import { Player } from '../../types/Player'
@@ -151,10 +152,7 @@ function Playing({ gameId }: PlayingProps) {
   )
 
   if (!user) {
-    return (
-      /* TODO: add login action */
-      <p className="italic text-center">You have to log in before playing.</p>
-    )
+    return <LoggedOut />
   }
 
   const play = async () => {
@@ -173,6 +171,7 @@ function Playing({ gameId }: PlayingProps) {
       email: user.email,
       score: 0,
       status: 'created',
+      userId: user.uid,
     })
 
     router.push(`/games/${gameId}/${newPlayer.id}`)

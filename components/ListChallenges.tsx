@@ -68,7 +68,7 @@ const ListChallenges = () => {
         (!data.length && (
           <p className="italic text-center">There is no challenges.</p>
         ))}
-      {data && data.length && (
+      {data && !!data.length && (
         <table className="table-fixed w-full">
           <thead>
             <tr className="bg-white text-left">

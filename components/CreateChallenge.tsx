@@ -17,6 +17,7 @@ import Heading from '../ui/Heading'
 type InitialValue = {
   cover: string
   coverName: string
+  coverSize: number
   name: string
   description: string
   questions: Question[]
@@ -38,6 +39,7 @@ const ErrorMessage = ({ name }: { name: string }) => (
 const initialValues: InitialValue = {
   cover: '',
   coverName: '',
+  coverSize: 0,
   name: '',
   description: '',
   questions: [],
@@ -103,6 +105,12 @@ const CreateChallenge = () => {
           description: Yup.string()
             .required('Required')
             .max(280, 'Must be 280 characters or less'),
+          cover: Yup.string().required('Required').min(1, 'Required'),
+          coverName: Yup.string().optional(),
+          coverSize: Yup.number().max(
+            5 * 1024 * 1024,
+            'File size should be lower than 5 mb.',
+          ),
           questions: Yup.array()
             .min(1)
             .of(
@@ -133,8 +141,8 @@ const CreateChallenge = () => {
           isSubmitting,
           values,
           setFieldValue,
-          /* setFieldError,
-          setFieldTouched, */
+          setValues,
+          setTouched,
         }) => (
           <Form>
             <div className="mb-4">
@@ -143,6 +151,7 @@ const CreateChallenge = () => {
                 type="text"
                 className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
                 placeholder="Name"
+                disabled={isSubmitting}
               />
               <ErrorMessage name="name" />
             </div>
@@ -152,6 +161,7 @@ const CreateChallenge = () => {
                 type="text"
                 className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
                 placeholder="Description"
+                disabled={isSubmitting}
               />
               <ErrorMessage name="description" />
             </div>
@@ -172,41 +182,33 @@ const CreateChallenge = () => {
                       ? event.currentTarget.files[0]
                       : null
 
-                  /* function bytesToSize(bytes: number) {
-                    const bytesLog = Math.log(bytes)
-                    const divisor = Math.log(1024)
-                    const floor = Math.floor(bytesLog / divisor)
-                    const value = parseInt(`${floor}`)
-
-                    return bytes / Math.pow(1024, value)
-                  } */
-
                   if (file) {
-                    /* const size = bytesToSize(file.size)
-
-                    if (size > 1) {
-                      setFieldValue('coverName', '')
-                      setFieldValue('cover', '')
-                      setFieldError(
-                        'cover',
-                        'File size should be less than 5 mb.',
-                      )
-                      setFieldTouched('cover', true, false)
-
-                      return
-                    } */
-
                     const reader = new FileReader()
 
                     reader.readAsDataURL(file)
 
                     reader.onload = function () {
-                      setFieldValue('coverName', file.name)
-                      setFieldValue('cover', reader.result)
+                      setTouched({
+                        cover: true,
+                        coverName: true,
+                        coverSize: true,
+                      })
+
+                      setValues({
+                        ...values,
+                        // @ts-ignore
+                        cover: reader.result,
+                        coverName: file.name,
+                        coverSize: file.size,
+                      })
                     }
                   } else {
-                    setFieldValue('coverName', '')
-                    setFieldValue('cover', '')
+                    setValues({
+                      ...values,
+                      cover: '',
+                      coverName: '',
+                      coverSize: 0,
+                    })
 
                     if (coverRef.current) {
                       coverRef.current.value = ''
@@ -218,6 +220,7 @@ const CreateChallenge = () => {
                 <button
                   type="button"
                   className="h-64 w-full border-black border-2 border-dashed focus:outline-none focus:shadow-outline"
+                  disabled={isSubmitting}
                   onClick={() => {
                     if (coverRef.current) {
                       coverRef.current.click()
@@ -238,10 +241,16 @@ const CreateChallenge = () => {
                       className="mx-auto shadow h-64"
                     />
                     <button
+                      type="button"
                       className="absolute bg-white border-2 rounded-full top-0 right-0 p-2 -mt-2 -mr-2 focus:outline-none focus:shadow-outline"
+                      disabled={isSubmitting}
                       onClick={() => {
-                        setFieldValue('coverName', '')
-                        setFieldValue('cover', '')
+                        setValues({
+                          ...values,
+                          cover: '',
+                          coverName: '',
+                          coverSize: 0,
+                        })
 
                         if (coverRef.current) {
                           coverRef.current.value = ''
@@ -254,6 +263,7 @@ const CreateChallenge = () => {
                 </div>
               )}
               <ErrorMessage name="cover" />
+              <ErrorMessage name="coverSize" />
             </div>
             <div className="mb-4">
               <FieldArray
@@ -264,6 +274,7 @@ const CreateChallenge = () => {
                       <Heading type="h2">Questions</Heading>
                       <Button
                         type="button"
+                        disabled={isSubmitting}
                         onClick={() => {
                           const defaultValidOption = uuidv4()
 
@@ -304,6 +315,7 @@ const CreateChallenge = () => {
                             type="text"
                             className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
                             placeholder="Description"
+                            disabled={isSubmitting}
                           />
                           <ErrorMessage
                             name={`questions[${questionIndex}].description`}
@@ -314,7 +326,8 @@ const CreateChallenge = () => {
                             name={`questions.${questionIndex}.time`}
                             as="select"
                             className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
-                            placeholder="Description"
+                            placeholder="Time"
+                            disabled={isSubmitting}
                           >
                             <option value="30">30 seconds</option>
                             <option value="60">60 seconds</option>
@@ -332,12 +345,14 @@ const CreateChallenge = () => {
                                   placeholder={`Option content #${
                                     optionIndex + 1
                                   }`}
+                                  disabled={isSubmitting}
                                 />
                               </div>
                               <div className="ml-4">
                                 <button
                                   type="button"
                                   className="focus:outline-none focus:shadow-outline"
+                                  disabled={isSubmitting}
                                   onClick={() => {
                                     setFieldValue(
                                       `questions.${questionIndex}.validOption`,
@@ -360,6 +375,7 @@ const CreateChallenge = () => {
                         ))}
                         <Button
                           type="button"
+                          disabled={isSubmitting}
                           onClick={() => {
                             remove(questionIndex)
                           }}

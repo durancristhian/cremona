@@ -25,6 +25,8 @@ const fuego = new Fuego(firebaseConfig)
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_GA_TRACKING_ID) return
+
     const handleRouteChange = (url: string) => {
       pageview(url)
     }
