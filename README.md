@@ -135,6 +135,17 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 11](https://img.youtube.com/vi/TCen9qw3vVo/0.jpg)](https://www.youtube.com/watch?v=TCen9qw3vVo)
 
+## Episodio 12, Martes 29/09/2020
+
+- Agregamos la posición al .csv que exportamos con la tabla de posiciones
+- Intentamos agregar Google Analytics pero tuvimos un error con TypeScript que no pudimos solucionar
+- Intentamos validar el peso de las imágenes que subimos a los desafíos pero tuvimos unos errores con Formik
+- Commits:
+    - [Episodio #12](https://github.com/durancristhian/cremona/commit/8201e3f75c56f9195752fb784e160d15d7c8d691)
+- [Deploy](https://cremona-ah9ucfvg0.vercel.app/)
+
+[![Episodio 12](https://img.youtube.com/vi/VtlQV1Dfa6Y/0.jpg)](https://www.youtube.com/watch?v=VtlQV1Dfa6Y)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
