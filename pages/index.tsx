@@ -6,7 +6,7 @@ import Button from '../ui/Button'
 export default function Index() {
   const { user } = useAuth()
 
-  return <div className="p-4">{user ? <LoggedIn /> : <LoggedOut />}</div>
+  return user ? <LoggedIn /> : <LoggedOut />
 }
 
 function LoggedIn() {

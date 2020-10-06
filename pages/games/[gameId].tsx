@@ -7,6 +7,7 @@ import { Game } from '../../types/Game'
 import { Player } from '../../types/Player'
 import Button from '../../ui/Button'
 import Heading from '../../ui/Heading'
+import { toLocalString } from '../../utils/toLocalString'
 
 const GameId = () => {
   const router = useRouter()
@@ -63,7 +64,7 @@ const GameId = () => {
             <p className="italic">{game.description}</p>
           </div>
           <div className="mb-4">
-            <p>{game.createdAt.toLocaleString()}</p>
+            <p>{toLocalString(game.createdAt)}</p>
           </div>
           <p>{game.questions.length} questions</p>
           {isAdmin && game.status !== 'finished' && (
@@ -87,7 +88,9 @@ const GameId = () => {
         {game.status === 'created' && !isAdmin && <Created></Created>}
         {game.status === 'playing' && (
           <>
-            <PlayingStatus gameId={gameId || ''} />
+            <div className="my-8">
+              <PlayingStatus gameId={gameId || ''} />
+            </div>
             <Playing gameId={gameId || ''}></Playing>
           </>
         )}
@@ -115,7 +118,7 @@ type PlayingStatusProps = {
   gameId: string
 }
 
-function PlayingStatus({ gameId }: PlayingStatusProps) {
+export function PlayingStatus({ gameId }: PlayingStatusProps) {
   const { data: players } = useCollection<Player>(
     gameId ? `challenges/${gameId}/players` : null,
     {
@@ -124,14 +127,25 @@ function PlayingStatus({ gameId }: PlayingStatusProps) {
   )
 
   const playersAmount = players?.length
-  const currentlyPlaying = players?.filter((p) => p.status === 'playing').length
-  const finished = players?.filter((p) => p.status === 'finished').length
+  const currentlyPlaying =
+    players?.filter((p) => p.status === 'playing').length || 0
 
   return (
-    <ul>
-      <li>People: {playersAmount}</li>
-      <li>Currently playing: {currentlyPlaying}</li>
-      <li>Finished: {finished}</li>
+    <ul className="flex items-center justify-center">
+      <li className="ml-4">
+        <span className="italic mr-2">People:</span>
+        <span className="font-bold bg-white px-2 py-1 shadow">
+          {playersAmount}
+        </span>
+      </li>
+      {currentlyPlaying > 0 && (
+        <li className="ml-4">
+          <span className="italic mr-2">Playing:</span>
+          <span className="font-bold bg-green-200 px-2 py-1 shadow text-green-700">
+            {currentlyPlaying}
+          </span>
+        </li>
+      )}
     </ul>
   )
 }

@@ -9,11 +9,7 @@ function Create() {
     return null
   }
 
-  return (
-    <div className="p-4">
-      <CreateChallenge />
-    </div>
-  )
+  return <CreateChallenge />
 }
 
 export default Create

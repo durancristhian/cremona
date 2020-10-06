@@ -7,6 +7,7 @@ import { Game } from '../types/Game'
 import A from '../ui/A'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
+import { toLocalString } from '../utils/toLocalString'
 
 const FILTERS = [
   {
@@ -28,7 +29,6 @@ const ListChallenges = () => {
   const [statusFilter, setStatusFilter] = useState('created')
   const { data, error, loading } = useCollection<Game>('challenges', {
     listen: true,
-    parseDates: ['createdAt'],
     where: [
       ['createdBy', '==', user.uid],
       ['status', '==', statusFilter],
@@ -91,7 +91,7 @@ const ListChallenges = () => {
                 </td>
                 <td className="border px-4 py-2">{game.status}</td>
                 <td className="border px-4 py-2">
-                  {game.createdAt.toLocaleString()}
+                  {toLocalString(game.createdAt)}
                 </td>
               </tr>
             ))}

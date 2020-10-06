@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useInterval from '../hooks/useInterval'
 
 type Props = {
@@ -14,14 +14,16 @@ const Countdown = ({ time, onFinish, onStart }: Props) => {
   const step = round(100 / time)
   const [times, setTimes] = useState(time)
 
+  useEffect(() => {
+    if (times === time) {
+      onStart()
+    }
+  }, [times])
+
   useInterval(
     () => {
       const nextTranslateLeft = round(translateLeft - step)
       setTranslateLeft(nextTranslateLeft)
-
-      if (times === time) {
-        onStart()
-      }
 
       const nextTimes = times - 1
       setTimes(nextTimes)

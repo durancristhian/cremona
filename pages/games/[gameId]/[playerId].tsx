@@ -16,6 +16,7 @@ import { Player } from '../../../types/Player'
 import A from '../../../ui/A'
 import Button from '../../../ui/Button'
 import Heading from '../../../ui/Heading'
+import { PlayingStatus } from '../[gameId]'
 
 export default function PlayerId() {
   const { user } = useAuth()
@@ -111,7 +112,9 @@ const Content = () => {
         <PlayerGame game={game} onFinish={onFinish} />
       ) : (
         <div className="text-center">
-          <Heading type="h1">{game.name}</Heading>
+          <div className="mb-4">
+            <Heading type="h1">{game.name}</Heading>
+          </div>
           <Button
             onClick={() => {
               update({
@@ -232,6 +235,9 @@ function PlayerGame({ game, onFinish }: PlayerGameProps) {
           />
         </div>
       )}
+      <div className="mt-8">
+        <PlayingStatus gameId={game.id} />
+      </div>
     </div>
   )
 }

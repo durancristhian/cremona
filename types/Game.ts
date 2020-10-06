@@ -16,7 +16,7 @@ export type Game = {
   name: string
   description: string
   cover: string
-  createdAt: Date
+  createdAt: string
   createdBy: string
   status: 'created' | 'playing' | 'finished'
   questions: Question[]

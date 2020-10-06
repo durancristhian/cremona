@@ -1,6 +1,7 @@
 import { useCollection } from '@nandorojo/swr-firestore'
 import firebase from 'firebase'
 import { Field, FieldArray, Form, Formik, FormikValues, getIn } from 'formik'
+import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import React, { FormEvent, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -68,7 +69,7 @@ const CreateChallenge = () => {
         await add({
           name: values.name,
           cover,
-          createdAt: new Date(),
+          createdAt: DateTime.utc().toString(),
           description: values.description,
           id: '',
           status: 'created',
