@@ -146,6 +146,18 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 12](https://img.youtube.com/vi/VtlQV1Dfa6Y/0.jpg)](https://www.youtube.com/watch?v=VtlQV1Dfa6Y)
 
+## Episodio 13, Sábado 3/10/2020
+
+- Solucionamos un error en la configuración de eslint que nos estaba imposibilitando ignorar un error para terminar con lo de Google Analytics
+- Agregamos la validación del peso de la foto que subimos al desafío
+- Deshabilitamos el form donde creamos el desafío cuando se está enviando
+- Validamos que la persona que va a jugar sea la misma que está logueada
+- Commits:
+    - [Episodio #13](https://github.com/durancristhian/cremona/commit/cec5ddc63eb40340a1e874d13d4f16d92ae47e21)
+- [Deploy](https://cremona-aos08qhd5.vercel.app/)
+
+[![Episodio 13](https://img.youtube.com/vi/8EPo29ysZDk/0.jpg)](https://www.youtube.com/watch?v=8EPo29ysZDk)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
