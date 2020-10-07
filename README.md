@@ -158,6 +158,17 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 13](https://img.youtube.com/vi/8EPo29ysZDk/0.jpg)](https://www.youtube.com/watch?v=8EPo29ysZDk)
 
+## Episodio 14, Martes 6/10/2020
+
+- Mejoramos la UI del componente que refleja el estado realtime del desafío y lo reutilizamos en la página del juego
+- Solucionamos un error al reproducir el sonido en el juego durante el primer segundo
+- Mejoramos el uso del campo de tipo fecha: usamos el formato UTC para almacenar la fecha y luego la convertimos a formato local al momento de mostrarla
+- Commits:
+    - [Episodio #14](https://github.com/durancristhian/cremona/commit/14b2011800990051edb7daf0a3e5a3737c20bd19)
+- [Deploy](https://cremona-qfrdqgxbq.vercel.app/)
+
+[![Episodio 14](https://img.youtube.com/vi/FAft2c6RMas/0.jpg)](https://www.youtube.com/watch?v=FAft2c6RMas)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
