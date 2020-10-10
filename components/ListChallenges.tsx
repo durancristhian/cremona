@@ -2,10 +2,8 @@ import { useCollection } from '@nandorojo/swr-firestore'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useUser } from '../hooks/useAuth'
-import CheckCircle from '../icons/CheckCircle'
 import { Game } from '../types/Game'
 import A from '../ui/A'
-import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import { toLocalString } from '../utils/toLocalString'
 
@@ -41,20 +39,23 @@ const ListChallenges = () => {
       <Heading type="h2" align="center">
         Your challenges
       </Heading>
-      <div className="flex items-center my-4">
-        <div className="flex flex-auto">
-          {FILTERS.map(({ text, value }) => (
-            <div key={value} className="mr-4">
-              <Button
-                onClick={() => {
-                  setStatusFilter(value)
-                }}
-              >
-                {statusFilter === value && <CheckCircle className="h-6 mr-4" />}
+      <div className="flex justify-between items-center my-4">
+        <div className="flex">
+          <select
+            name="filter"
+            id="filter"
+            className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline bg-white"
+            onChange={(event) => {
+              setStatusFilter(event.target.value)
+            }}
+            onBlur={() => void 0}
+          >
+            {FILTERS.map(({ text, value }) => (
+              <option key={value} value={value}>
                 {text}
-              </Button>
-            </div>
-          ))}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <Link href="/create" passHref>

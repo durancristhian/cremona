@@ -6,14 +6,10 @@ import Button from '../ui/Button'
 export default function Index() {
   const { user } = useAuth()
 
-  return user ? <LoggedIn /> : <LoggedOut />
+  return user ? <ListChallenges /> : <Login />
 }
 
-function LoggedIn() {
-  return <ListChallenges />
-}
-
-export function LoggedOut() {
+export function Login() {
   const { googleSignIn } = useAuth()
 
   return (

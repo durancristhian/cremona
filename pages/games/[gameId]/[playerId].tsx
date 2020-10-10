@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { LoggedOut } from '../..'
+import { Login } from '../..'
 import Countdown from '../../../components/Countdown'
 import useAudio from '../../../hooks/useAudio'
 import { useAuth, useUser } from '../../../hooks/useAuth'
@@ -21,7 +21,7 @@ import { PlayingStatus } from '../[gameId]'
 export default function PlayerId() {
   const { user } = useAuth()
 
-  return user ? <Content /> : <LoggedOut />
+  return user ? <Content /> : <Login />
 }
 
 const Content = () => {

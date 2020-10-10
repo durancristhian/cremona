@@ -150,7 +150,7 @@ const CreateChallenge = () => {
               <Field
                 name="name"
                 type="text"
-                className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
+                className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1 disabled:opacity-50 bg-white"
                 placeholder="Name"
                 disabled={isSubmitting}
               />
@@ -160,7 +160,7 @@ const CreateChallenge = () => {
               <Field
                 name="description"
                 type="text"
-                className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
+                className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1 disabled:opacity-50 bg-white"
                 placeholder="Description"
                 disabled={isSubmitting}
               />
@@ -220,7 +220,7 @@ const CreateChallenge = () => {
               {!values.cover ? (
                 <button
                   type="button"
-                  className="h-64 w-full border-black border-2 border-dashed focus:outline-none focus:shadow-outline"
+                  className="h-64 w-full border-black border-2 border-dashed focus:outline-none focus:shadow-outline disabled:opacity-50"
                   disabled={isSubmitting}
                   onClick={() => {
                     if (coverRef.current) {
@@ -243,7 +243,7 @@ const CreateChallenge = () => {
                     />
                     <button
                       type="button"
-                      className="absolute bg-white border-2 rounded-full top-0 right-0 p-2 -mt-2 -mr-2 focus:outline-none focus:shadow-outline"
+                      className="absolute bg-white border-2 rounded-full top-0 right-0 p-2 -mt-2 -mr-2 focus:outline-none focus:shadow-outline disabled:opacity-50"
                       disabled={isSubmitting}
                       onClick={() => {
                         setValues({
@@ -314,7 +314,7 @@ const CreateChallenge = () => {
                           <Field
                             name={`questions.${questionIndex}.description`}
                             type="text"
-                            className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
+                            className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1 disabled:opacity-50 bg-white"
                             placeholder="Description"
                             disabled={isSubmitting}
                           />
@@ -326,7 +326,7 @@ const CreateChallenge = () => {
                           <Field
                             name={`questions.${questionIndex}.time`}
                             as="select"
-                            className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
+                            className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1 disabled:opacity-50 bg-white"
                             placeholder="Time"
                             disabled={isSubmitting}
                           >
@@ -342,7 +342,7 @@ const CreateChallenge = () => {
                                 <Field
                                   name={`questions.${questionIndex}.options.${optionIndex}.content`}
                                   type="text"
-                                  className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1"
+                                  className="border-2 px-4 py-2 focus:outline-none focus:shadow-outline w-full mb-1 disabled:opacity-50 bg-white"
                                   placeholder={`Option content #${
                                     optionIndex + 1
                                   }`}
@@ -352,7 +352,7 @@ const CreateChallenge = () => {
                               <div className="ml-4">
                                 <button
                                   type="button"
-                                  className="focus:outline-none focus:shadow-outline"
+                                  className="focus:outline-none focus:shadow-outline disabled:opacity-50"
                                   disabled={isSubmitting}
                                   onClick={() => {
                                     setFieldValue(

@@ -1,8 +1,8 @@
 import { fuego, useCollection, useDocument } from '@nandorojo/swr-firestore'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { LoggedOut } from '..'
-import { useAuth } from '../../hooks/useAuth'
+import { Login } from '..'
+import { useAuth, useUser } from '../../hooks/useAuth'
 import { Game } from '../../types/Game'
 import { Player } from '../../types/Player'
 import Button from '../../ui/Button'
@@ -85,17 +85,23 @@ const GameId = () => {
         </div>
       </div>
       <div className="mt-4">
-        {game.status === 'created' && !isAdmin && <Created></Created>}
-        {game.status === 'playing' && (
+        {user ? (
           <>
-            <div className="my-8">
-              <PlayingStatus gameId={gameId || ''} />
-            </div>
-            <Playing gameId={gameId || ''}></Playing>
+            {game.status === 'created' && !isAdmin && <Created />}
+            {game.status === 'playing' && (
+              <>
+                <div className="my-8">
+                  <PlayingStatus gameId={gameId || ''} />
+                </div>
+                <Playing gameId={gameId || ''} />
+              </>
+            )}
+            {game.status === 'finished' && (
+              <Finished gameId={gameId || ''} isAdmin={isAdmin} />
+            )}
           </>
-        )}
-        {game.status === 'finished' && (
-          <Finished gameId={gameId || ''} isAdmin={isAdmin}></Finished>
+        ) : (
+          <Login />
         )}
       </div>
     </>
@@ -156,7 +162,7 @@ type PlayingProps = {
 
 function Playing({ gameId }: PlayingProps) {
   const router = useRouter()
-  const { user } = useAuth()
+  const user = useUser()
   const { data: players } = useCollection<Player>(
     user ? `challenges/${gameId}/players` : null,
     {
@@ -165,15 +171,7 @@ function Playing({ gameId }: PlayingProps) {
     },
   )
 
-  if (!user) {
-    return <LoggedOut />
-  }
-
   const play = async () => {
-    if (!user.displayName || !user.email) {
-      return alert('You need a display name and email')
-    }
-
     const newPlayer = fuego.db
       .collection('challenges')
       .doc(gameId)
