@@ -169,6 +169,18 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 [![Episodio 14](https://img.youtube.com/vi/FAft2c6RMas/0.jpg)](https://www.youtube.com/watch?v=FAft2c6RMas)
 
+## Episodio 15, Sábado 10/10/2020
+
+- Mejoramos el estado `disabled` de los inputs del formulario de creación de desafíos para que reflejen mejor el estado de que se está procesando
+- Quitamos el botón de login del header y usamos un componente para ejecutar esa acción que ahora pasa a estar en cada página
+- Cambiamos los botones para filtrar de la home por un select
+- Agregamos meta tags al sitio para que en redes sociales se vea algo de información que tenga sentido
+- Commits:
+    - [Episodio #15](https://github.com/durancristhian/cremona/commit/4b442ad8c199744c497e0e5c73d6003dca007800)
+- [Deploy](https://cremona-6hsxf7eqc.vercel.app/)
+
+[![Episodio 15](https://img.youtube.com/vi/WOIIZZZSkO8/0.jpg)](https://www.youtube.com/watch?v=WOIIZZZSkO8)
+
 ## Desarrollo
 
 Duplicar el archivo `.env.template`, renombrarlo como `.env.` y agregar los valores para poder correr el proyecto. Luego:
