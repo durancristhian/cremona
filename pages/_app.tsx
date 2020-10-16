@@ -91,12 +91,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="https://cremona.vercel.app/logo.png"
+          content="https://cremona.vercel.app/social.jpg"
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:image"
-          content="https://cremona.vercel.app/logo.png"
+          content="https://cremona.vercel.app/social.jpg"
         />
         <meta
           name="viewport"
