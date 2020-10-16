@@ -6,6 +6,10 @@ Consiste en una pequeña app hecha con [Next.js](https://nextjs.org/), [Tailwind
 
 > _Disclaimer: La app pertenece a un caso de uso personal y es un clon de una ya existente._
 
+## Demo del proyecto terminado
+
+[![Demo](https://img.youtube.com/vi/7cN6F29IzaM/0.jpg)](https://www.youtube.com/watch?v=7cN6F29IzaM)
+
 ## Episodio 1, Sábado 22/08/2020
 
 - Maquetamos el `<Layout />`
